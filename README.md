@@ -7,7 +7,9 @@ Repositório utilizado para realizar a global solution do primeiro semestre da m
 
 
 ## Integrantes do grupo
-(integrantes aqui)
+Victor Kenzo Toma RM551649
+Arthur Baldissera Claumann Marcos RM550219
+Ricardo Ramos Vergani RM550166
 
 
 ## Link da apresentação 
