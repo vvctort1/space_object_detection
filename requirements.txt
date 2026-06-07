@@ -2,4 +2,4 @@ torch
 torchvision
 matplotlib
 numpy
-pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu132p
+gradio
