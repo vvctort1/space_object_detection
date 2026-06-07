@@ -5,13 +5,13 @@ import torch.nn.functional as F
 from torchvision import transforms
 from PIL import Image
 
-# 1. Definir as classes exatas do EuroSAT (ordem alfabética, padrão do ImageFolder)
+# Definindo classes
 CLASSES = [
     'AnnualCrop', 'Forest', 'HerbaceousVegetation', 'Highway', 
     'Industrial', 'Pasture', 'PermanentCrop', 'Residential', 'River', 'SeaLake'
 ]
 
-# 2. Recriar a arquitetura da sua CNN Avançada
+# Estrutura arquitetura vencedora
 class CNNAvancada(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
@@ -54,41 +54,36 @@ class CNNAvancada(nn.Module):
         x = self.classifier(x)
         return x
 
-# 3. Configurar o dispositivo e carregar o modelo
-device = torch.device("cpu") # Para o Gradio, CPU é suficiente e mais fácil de hospedar
+# 3. Configurando device como cpu (suficiente para o delpoy e salvando o modelo
+device = torch.device("cpu") 
 modelo = CNNAvancada(num_classes=10)
 modelo.load_state_dict(torch.load('melhor_modelo_eurosat.pth', map_location=device))
 modelo.to(device)
-modelo.eval() # Modo de avaliação (desliga o Dropout)
+modelo.eval() 
 
-# 4. Definir as transformações (MESMAS do treinamento)
 transform = transforms.Compose([
     transforms.Resize((64, 64)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-# 5. Função de predição chamada pelo Gradio
 def prever_imagem(imagem):
-    # O Gradio envia um array/PIL, garantimos que é PIL RGB
     if not isinstance(imagem, Image.Image):
         imagem = Image.fromarray(imagem).convert('RGB')
     else:
         imagem = imagem.convert('RGB')
         
-    # Pre-processamento
-    img_tensor = transform(imagem).unsqueeze(0).to(device) # Adiciona a dimensão do batch
+    img_tensor = transform(imagem).unsqueeze(0).to(device)
     
-    # Inferência
     with torch.no_grad():
         outputs = modelo(img_tensor)
-        probabilidades = F.softmax(outputs[0], dim=0) # Converte para percentagens
+        probabilidades = F.softmax(outputs[0], dim=0) 
         
-    # Monta o dicionário de saída {Nome da Classe: Probabilidade} para o Gradio criar o gráfico
+    
     resultado = {CLASSES[i]: float(probabilidades[i]) for i in range(len(CLASSES))}
     return resultado
 
-# 6. Criar a interface visual do Gradio
+# Criando interface gradio
 interface = gr.Interface(
     fn=prever_imagem,
     inputs=gr.Image(type="pil", label="Carregar Imagem de Satélite"),
@@ -98,7 +93,6 @@ interface = gr.Interface(
     theme="default"
 )
 
-# 7. Lançar o aplicativo
+# Deploy local
 if __name__ == "__main__":
-    # share=True gera um link público temporário (ótimo para testar ou apresentar)
     interface.launch(share=True)
