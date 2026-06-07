@@ -54,7 +54,7 @@ class CNNAvancada(nn.Module):
         x = self.classifier(x)
         return x
 
-# 3. Configurando device como cpu (suficiente para o delpoy e salvando o modelo
+# Configurando device como cpu (suficiente para o delpoy e salvando o modelo
 device = torch.device("cpu") 
 modelo = CNNAvancada(num_classes=10)
 modelo.load_state_dict(torch.load('melhor_modelo_eurosat.pth', map_location=device))
