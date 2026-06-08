@@ -1,3 +1,0 @@
-Carregar Imagem de Satélite,Previsão do Modelo,timestamp
-,"{""label"": null, ""confidences"": null}",2026-06-07 20:12:03.215062
-.gradio\flagged\Carregar Imagem de Satélite\b9cb29601c4cb51f8816\clipboard.png,"{""label"": ""Residential"", ""confidences"": [{""label"": ""Residential"", ""confidence"": 0.9992128610610962}, {""label"": ""Highway"", ""confidence"": 0.000605874287430197}, {""label"": ""Industrial"", ""confidence"": 9.828155452851206e-05}]}",2026-06-07 20:22:54.425001
