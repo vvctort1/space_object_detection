@@ -3,3 +3,5 @@ scrapping.py
 limpeza.py
 
 venv_cnn
+
+.DS_Store
