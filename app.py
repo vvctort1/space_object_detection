@@ -1,9 +1,9 @@
 import gradio as gr
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import transforms
 from PIL import Image
+from arquiteturas.model2 import CNNAvancada
 
 # Definindo classes
 CLASSES = [
@@ -11,50 +11,8 @@ CLASSES = [
     'Industrial', 'Pasture', 'PermanentCrop', 'Residential', 'River', 'SeaLake'
 ]
 
-# Estrutura arquitetura vencedora
-class CNNAvancada(nn.Module):
-    def __init__(self, num_classes=10):
-        super().__init__()
-        self.features = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU(),
-            nn.Conv2d(32, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU(),
-            nn.MaxPool2d(2, 2),
-            nn.Dropout(0.25),
 
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.MaxPool2d(2, 2),
-            nn.Dropout(0.25),
-
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(),
-            nn.MaxPool2d(2, 2),
-            nn.Dropout(0.4)
-        )
-        self.classifier = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(128 * 8 * 8, 512),
-            nn.BatchNorm1d(512),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            nn.Linear(512, num_classes)
-        )
-    
-    def forward(self, x):
-        x = self.features(x)
-        x = self.classifier(x)
-        return x
-
-# Configurando device como cpu (suficiente para o delpoy e salvando o modelo
+# Configurando device como cpu (suficiente para o delpoy e salvando o modelo vencedor
 device = torch.device("cpu") 
 modelo = CNNAvancada(num_classes=10)
 modelo.load_state_dict(torch.load('melhor_modelo_eurosat.pth', map_location=device))
