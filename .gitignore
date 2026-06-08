@@ -4,6 +4,10 @@ limpeza.py
 
 venv_cnn
 
+.venv
+
 .DS_Store
 
 .gradio
+
+__pycache__
