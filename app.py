@@ -15,7 +15,7 @@ CLASSES = [
 # Configurando device como cpu (suficiente para o delpoy e salvando o modelo vencedor
 device = torch.device("cpu") 
 modelo = CNNAvancada(num_classes=10)
-modelo.load_state_dict(torch.load('melhor_modelo_eurosat.pth', map_location=device))
+modelo.load_state_dict(torch.load('best_model2_weights.pth', map_location=device))
 modelo.to(device)
 modelo.eval() 
 
@@ -46,7 +46,7 @@ interface = gr.Interface(
     fn=prever_imagem,
     inputs=gr.Image(type="pil", label="Carregar Imagem de Satélite"),
     outputs=gr.Label(num_top_classes=3, label="Previsão do Modelo"),
-    title="🌌 Classificador de Imagens Orbitais (EuroSAT)",
+    title="🌌 Classificador de Imagens Orbitais - OrbitGuard",
     description="Faça o upload de uma imagem de satélite (64x64) para classificar o tipo de uso do solo. Projeto para a Global Solution - Indústria Espacial.",
     theme="default"
 )
