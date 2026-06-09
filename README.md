@@ -107,4 +107,4 @@ Abra e execute o notebook `modelo_detecção_objeto.ipynb` célula por célula (
 
 ## Apresentação
 
-> **Link da apresentação:** (link aqui)
+> **Link da apresentação:** https://youtu.be/PJeqAbWR0VU?feature=shared
